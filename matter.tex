@@ -1,0 +1,129 @@
+%%!TEX encoding = UTF-8 Unicode
+% !TEX lualatex
+\documentclass[11pt,a4paper,openright,twoside,onecolumn,cmyk]{book}
+
+%% to use if/else statements
+\usepackage{ifthen}
+
+% to define draft document options
+\newboolean{draft}\setboolean{draft}{false}
+\newboolean{margins}\setboolean{margins}{false}
+\newboolean{frames}\setboolean{frames}{false}
+
+% to remove color from chapters and sections
+\newboolean{lesscolor}\setboolean{lesscolor}{false}
+
+% to add dedicatory page
+\newboolean{dedicatory}\setboolean{dedicatory}{true}
+
+%% PREAMBLE
+\input{preamble}
+
+%% COMMANDS
+\input{commands}
+
+\begin{document}
+
+%% set variable to detect subfile to false
+\setboolean{InSubfile}{false}
+
+%%%%%%%%%
+% COVER %
+%%%%%%%%%
+
+% set page numbering to roman
+\pagenumbering{roman}
+
+% insert hardcover page and blank page
+{
+    \renewcommand{\thepage}{Hardcover}
+    \includepdf[pages=1]{cover.pdf}
+    \renewcommand{\thepage}{}
+    \includepdf[pages=2]{cover.pdf}
+}
+
+% reset page counter
+\setcounter{page}{1}
+
+% insert cover page and blank page
+\includepdf[pages=3-4]{cover.pdf}
+
+% insert dedicatory page
+\ifthenelse{\boolean{dedicatory}}{
+        \includepdf[pages=5-6]{cover.pdf}
+    }{}
+
+% insert pages from dedicatory onwards
+\ifthenelse{\boolean{dedicatory}}{
+        \includepdf[pages=7-]{cover.pdf}
+    }{
+        \includepdf[pages=5-]{cover.pdf}
+    }
+
+
+% insert bookmarks
+\bookmark[page=1]{Hardcover}
+\bookmark[page=3]{Cover}
+\ifthenelse{\boolean{dedicatory}}{
+        \bookmark[page=5]{Dedicatory}
+        \bookmark[page=7]{Jury}
+        \bookmark[page=9]{Acknowledgements}
+        \bookmark[page=11]{Abstract}
+    }{
+        \bookmark[page=5]{Jury}
+        \bookmark[page=7]{Acknowledgements}
+        \bookmark[page=9]{Abstract}
+    }
+
+
+%%%%%%%%%%%%%%%%
+% FRONT MATTER %
+%%%%%%%%%%%%%%%%
+\frontmatter
+\titleformat{\chapter}[hang]{\chapterstyle}{}{0pt}{\colordem{#1}}
+
+%% set matter page counter
+\ifthenelse{\boolean{dedicatory}}{
+        \setcounter{page}{15}
+    }{
+        \setcounter{page}{13}
+    }
+
+%%% TABLE OF CONTENTS
+\cleardoublepage
+\renewcommand{\contentsname}{Contents}
+\pdfbookmark{\contentsname}{toc}
+\tableofcontents
+
+
+%%%%%%%%%%%%%%%
+% MAIN MATTER %
+%%%%%%%%%%%%%%%
+\mainmatter
+\titleformat{\chapter}[hang]{\chapterstyle}{\colordem{\Huge\thechapter}}{1em}{#1}
+
+% set page numbering to arabic
+\pagenumbering{arabic}
+
+%%% CHAPTERS
+
+%% CHAPTER 1
+\subfile{chapters/chapter1}
+
+%% CHAPTER X
+% \subfile{chapters/chapterX}
+
+%%%%%%%%%%%%%%%
+% BACK MATTER %
+%%%%%%%%%%%%%%%
+\backmatter
+\titleformat{\chapter}[hang]{\chapterstyle}{}{0pt}{\colordem{#1}}
+
+%%% BIBLIOGRAPHY
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\texorpdfstring{\nonumchaptoc{\bibname}}{\bibname}}
+\tocless{\chapter{\bibname}}
+\leavevmode\printbibliography[heading=none]
+
+\end{document}

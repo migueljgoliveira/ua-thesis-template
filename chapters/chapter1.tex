@@ -1,0 +1,45 @@
+\documentclass[../matter.tex]{subfiles}
+\externaldocument{../matter.tex}
+
+% to set chapter number
+\setcounter{chapter}{0}
+
+% to customize chapter title
+\titleformat{\chapter}[hang]{\chapterstyle}{\colordem{\Huge\thechapter}}{1em}{#1}
+
+\begin{document}
+
+% ABOVE THIS LINE ARE SUBFILE COMPILATION COMMANDS %
+%--------------------------------------------------%
+
+
+% to set figures path
+\graphicspath{{../figures/chapter1/}}
+
+\chapter{Dummy Chapter}
+\label{ch:1}
+
+\section{Dummy Section}
+
+\section{Dummy Subsection}
+
+\begin{figure}[!t]
+	\centering
+    %
+	\includegraphics[width=\textwidth]{\figpath{1}{pdf}}
+	%
+    \caption{Caption of a dummy figure.}
+	%
+    \label{fig:1.1}
+\end{figure}
+
+%--------------------------------------------------%
+% BELOW THIS LINE ARE SUBFILE COMPILATION COMMANDS %
+
+\ifthenelse{\boolean{InSubfile}}{
+    \addcontentsline{toc}{section}{\texorpdfstring{\nonumchaptoc{References}}{References}}
+    \section*{References}
+    \leavevmode\printbibliography[heading=none]
+    }{}
+
+\end{document}

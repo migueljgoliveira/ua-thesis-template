@@ -1,0 +1,138 @@
+%!TEX encoding = UTF-8 Unicode
+
+%% UA Thesis Cover Pages
+
+% add 'final' parameter to remove "PROVISIONAL DOCUMENT" from cover page
+\documentclass[final,11pt,twoside,a4paper]{report}
+
+%%% Select area of study and department from list and replace in the
+%%% \usepackage[area,department]{ua-thesis-template}
+%%%
+%%% | area        |   | department |
+%%% ---------------   --------------
+%%% | arts        |   | dao        |
+%%% | sciences    |   | dbio       |
+%%% | education   |   | dcspt      |
+%%% | economy     |   | deca       |
+%%% | engineering |   | degeit     |
+%%% | humanities  |   | de         |
+%%% | health      |   | deti       |
+%%% |             |   | demac      |
+%%% |             |   | decivil    |
+%%% |             |   | dem        |
+%%% |             |   | dfis        |
+%%% |             |   | dlc        |
+%%% |             |   | dmat       |
+%%% |             |   | dq         |
+%%% |             |   | dcm        |
+%%% |             |   | dgeo        |
+%%% ---------------   --------------
+%% to import UA thesis template
+\usepackage[engineering,dem]{ua-thesis-template}
+
+%% to use utf8 encoding and T1 fonts
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% for prettier pages
+\usepackage{lmodern}
+
+%% to use internationalization and localization languages
+\usepackage[english,portuguese,french,italian]{babel}
+
+\usepackage{xspace}% used by \sigla
+
+%% to add dummy text
+\usepackage{blindtext}
+
+%% to customise bookmarks
+\usepackage[open,openlevel=2,numbered]{bookmark}
+
+%% to control hyphenation
+% \hyphenpenalty=100
+\doublehyphendemerits=1000000
+
+%% to use helvetica font
+\usepackage{fontspec}
+\setsansfont{Helvetica Neue}[
+    Extension = {.otf},
+    UprightFont = {*-Roman},
+    BoldFont = {*-Bold},
+    ItalicFont = {*-Italic},
+    BoldItalicFont = {*-BoldItalic}
+]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%       DEFINE THESIS COVER FIELDS             %%
+%%                  START                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% to set thesis Year
+\ThesisYear{2022}
+
+%% to set type of document
+\DocumentTypeThesis
+%\DocumentTypeDissertation
+
+%%% AUTHOR
+\Author{Full Author's Name}
+
+%%% THESIS TITLE
+%% English
+\Title{\selectlanguage{english}English Title}
+
+%% Portuguese
+\Title{\selectlanguage{portuguese}\mdseries Título em Português}
+
+%% French
+\Title{\selectlanguage{french}\mdseries Titre en Français}
+
+%%% SUPERVISORS
+%% First Supervisor
+\Supervisor{First Supervisor's Name}{Category of First Supervisor}
+
+%% Second Supervisor
+\SecondSupervisor{Second Supervisor's Name}{Category of Second Supervisor}{University of Second Supervisor}
+
+%%% DEGREE
+%%% \Degree{title}{name}
+%%%
+%%% title: Degree title (Mestre or Doutor)
+%%% name : Degree name
+\Degree{Doutor}{Engenharia Mecânica pela Universidade de Aveiro}
+
+%%% DEDICATORY (optional)
+\Dedicatory{I dedicate this work to...}
+
+%%% ACKNOWLEGMENTS
+\Acknowledgements{\selectlanguage{portuguese}\input{cover/acknowledgments}}
+
+%%% KEYWORDS & ABSTRACT
+%% English
+\Abstract{keywords}{\selectlanguage{english}\input{cover/keywordsEN}}{abstract}{\selectlanguage{english}\input{cover/abstractEN}}
+
+%% Portuguese
+\Abstract{palavras chave}{\selectlanguage{portuguese}\input{cover/keywordsPT}}{resumo}{\selectlanguage{portuguese}\input{cover/abstractPT}}
+
+%%% JURY
+%% First member will be the President of the Jury
+\JuriMember{President's Name}{Category of President's Name}
+
+%% Additional members of the Jury
+\JuriMember{First Jury's Name}{Category of First Jury's Name}
+\JuriMember{Second Jury's Name}{Category of Second Jury's Name}
+\JuriMember{Third Jury's Name}{Category of Third Jury's Name}
+\JuriMember{Fourth Jury's Name}{Category of Fourth Jury's Name}
+\JuriMember{X Jury's Name}{Category of X Jury's Name}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%       DEFINE THESIS COVER FIELDS             %%
+%%                  END                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\MakeCover
+
+\end{document}

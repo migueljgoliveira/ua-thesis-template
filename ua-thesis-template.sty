@@ -1,0 +1,577 @@
+%!TEX encoding = UTF-8 UnicodeTEX encoding = UTF-8 Unicode
+%
+% LaTeX style file for thesis made at the University of Aveiro
+%
+% (c) 1999, 2007, 2009 Tom�s Oliveira e Silva
+%
+% Modified by Jo�o Paulo Barraca to better comply with UA guidelines.
+%
+% Some tweeks by Pedro Miguel Oliveira Estima to help new users
+
+\ProvidesPackage{ua-thesis-template}[2012/10/26 v0.1 UA thesis template]
+%
+\usepackage{graphicx}
+\usepackage{color}
+%\usepackage{a4wide}
+\usepackage{etoolbox}
+
+% to set figures path
+\graphicspath{{figures/}}
+
+%Lists
+\def\ciJuriMember{}
+\def\ciTitle{}
+\def\ciAbstract{}
+\def\ciKeywords{}
+
+%User Hooks
+\newcommand{\DocumentTypeThesis}{\def\ciDocumentTypeThesis{}}
+\newcommand{\DocumentTypeDissertation}{\def\ciDocumentTypeDissertation{}}
+\newcommand{\ThesisYear}[1]{\def\ciThesisYear{#1}}
+\newcommand{\Title}[1]{\listadd{\ciTitle}{\TITLE{\DISPLAYAUTHOR}{#1\newline} }}
+\newcommand{\Author}[1]{\def\ciAuthor{#1}}
+\newcommand{\Quote}[2]{\def\ciQuoteText{#1}\def\ciQuoteAuthor{#2}}
+\newcommand{\Dedicatory}[1]{\def\ciDedicatory{#1}}
+\newcommand{\Supervisor}[2]{\def\ciSupervisorName{{#1}}\def\ciSupervisorTitle{{#2}}}
+\newcommand{\SecondSupervisor}[4]{\def\ciSecondSupervisorName{{#1}}\def\ciSecondSupervisorTitle{{#2}}\def\ciSecondSupervisorDepart{{#3}}\def\ciSecondSupervisorSchool{{#4}}}
+\newcommand{\Degree}[2]{\def\ciDegreeTitle{#1}\def\ciDegreeName{#2}}
+\newcommand{\GrantText}[2]{\def\ciGrantFirst{#1}\def\ciGrantSecond{#2}}
+\newcommand{\Acknowledgements}[1]{\def\ciAcknowledgements{#1}}
+\newcommand{\JuriMember}[2]{
+    \listadd{\ciJuriMember}{\JURI{\JURICATEGORY}{#1}{#2}}
+}
+\newcommand{\Abstract}[4]{\listadd{\ciAbstract}{
+  \TitlePage
+    \vspace*{55mm}
+   \SECTION{\textbf{#1}}
+         {#2}
+    \vspace*{10mm}
+    \SECTION{\textbf{#3}}
+         {#4}
+  \EndTitlePage
+  \titlepage\ \endtitlepage % empty page
+ }
+}
+
+%
+% to remove "Provisional Document" from cover page
+%
+\newif\ifua@final@\ua@final@false
+\DeclareOption{final}{\ua@final@true}
+
+%
+% New 2021 rules which remove the department name from the cover page
+%
+\newif\ifua@coverdepname@\ua@coverdepname@true
+\DeclareOption{coverdepname}{\ua@coverdepname@false}
+
+%
+% to set the color of cover page top bar
+% (pantone approximations according to http://goffgrafix.com/pantone-rgb-100.php)
+%
+\DeclareOption{usecolor}{} % no longer used
+
+\def\ua@arts       {% approximation of the color pantone  264
+                    \def\ua@red{0.776}\def\ua@green{0.667}\def\ua@blue{0.859}}
+
+\def\ua@sciences   {% approximation of the color pantone 3105
+                    \def\ua@red{0.498}\def\ua@green{0.839}\def\ua@blue{0.859}}
+
+\def\ua@education  {% approximation of the color pantone 1505
+                    \def\ua@red{0.957}\def\ua@green{0.486}\def\ua@blue{0.00}}
+
+\def\ua@economy    {% approximation of the color pantone 1787 (the middle bar is white!)
+                    \def\ua@red{0.957}\def\ua@green{0.247}\def\ua@blue{0.310}}
+
+\def\ua@engineering{% approximation of the color pantone  484
+                    \def\ua@red{0.608}\def\ua@green{0.188}\def\ua@blue{0.110}}
+
+\def\ua@humanities {% approximation of the color pantone  301
+                    \def\ua@red{0}\def\ua@green{0.357}\def\ua@blue{0.6}}
+
+\def\ua@health     {% approximation of the color pantone  115
+                    \def\ua@red{0.976}\def\ua@green{0.878}\def\ua@blue{0.298}}
+
+\def\ua@white{1}
+
+\DeclareOption{arts}{\ua@arts
+  \let\ua@redT=\ua@red\let\ua@greenT=\ua@green\let\ua@blueT=\ua@blue
+  \let\ua@redM=\ua@red\let\ua@greenM=\ua@green\let\ua@blueM=\ua@blue
+  \let\ua@redB=\ua@red\let\ua@greenB=\ua@green\let\ua@blueB=\ua@blue
+}
+\DeclareOption{sciences}{\ua@sciences
+  \let\ua@redT=\ua@red\let\ua@greenT=\ua@green\let\ua@blueT=\ua@blue
+  \let\ua@redM=\ua@red\let\ua@greenM=\ua@green\let\ua@blueM=\ua@blue
+  \let\ua@redB=\ua@red\let\ua@greenB=\ua@green\let\ua@blueB=\ua@blue
+}
+\DeclareOption{education}{\ua@education
+  \let\ua@redT=\ua@red\let\ua@greenT=\ua@green\let\ua@blueT=\ua@blue
+  \let\ua@redM=\ua@red\let\ua@greenM=\ua@green\let\ua@blueM=\ua@blue
+  \let\ua@redB=\ua@red\let\ua@greenB=\ua@green\let\ua@blueB=\ua@blue
+}
+\DeclareOption{economy}{\ua@economy
+  \let\ua@redT=\ua@red\let\ua@greenT=\ua@green\let\ua@blueT=\ua@blue% the middle bar is white
+  \let\ua@redM=\ua@white\let\ua@greenM=\ua@white\let\ua@blueM=\ua@white
+  \let\ua@redB=\ua@red\let\ua@greenB=\ua@green\let\ua@blueB=\ua@blue
+}
+\DeclareOption{engineering}{\ua@engineering
+  \let\ua@redT=\ua@red\let\ua@greenT=\ua@green\let\ua@blueT=\ua@blue
+  \let\ua@redM=\ua@red\let\ua@greenM=\ua@green\let\ua@blueM=\ua@blue
+  \let\ua@redB=\ua@red\let\ua@greenB=\ua@green\let\ua@blueB=\ua@blue
+}
+\DeclareOption{humanities}{\ua@humanities
+  \let\ua@redT=\ua@red\let\ua@greenT=\ua@green\let\ua@blueT=\ua@blue
+  \let\ua@redM=\ua@red\let\ua@greenM=\ua@green\let\ua@blueM=\ua@blue
+  \let\ua@redB=\ua@red\let\ua@greenB=\ua@green\let\ua@blueB=\ua@blue
+}
+\DeclareOption{health}{\ua@health
+  \let\ua@redT=\ua@red\let\ua@greenT=\ua@green\let\ua@blueT=\ua@blue
+  \let\ua@redM=\ua@red\let\ua@greenM=\ua@green\let\ua@blueM=\ua@blue
+  \let\ua@redB=\ua@red\let\ua@greenB=\ua@green\let\ua@blueB=\ua@blue
+}
+
+
+%
+% to set department names
+%
+\DeclareOption{dao}{%
+  \def\ua@textA{Departamento de Ambiente}%
+  \def\ua@textB{e Ordenamento}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dbio}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Biologia}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dcspt}{%
+  \def\ua@textA{Departamento de Ci\^{e}ncias Sociais,}%
+  \def\ua@textB{Pol\'{\i}ticas e do Territ\'{o}rio}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{deca}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Comunica\c{c}\~{a}o e Arte}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{degeit}{%
+  \def\ua@textA{Departamento de Economia, Gest\~{a}o,}%
+  \def\ua@textB{Engenharia Industrial e Turismo}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{de}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Educa\c{c}\~{a}o e Psicologia}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{deti}{%
+  \def\ua@textA{Departamento de Eletr\'{o}nica,}%
+  \def\ua@textB{Telecomunica\c{c}\~{o}es e Inform\'{a}tica}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{demac}{%
+  \def\ua@textA{Departamento de Engenharia}%
+  \def\ua@textB{de Materiais e Cer\^{a}mica}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{decivil}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Engenharia Civil}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dem}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Engenharia Mec\^{a}nica}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dfis}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de F\'{\i}sica}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dlc}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de L\'{\i}nguas e Culturas}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dmat}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Matem\'atica}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dq}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Qu\'{\i}mica}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dcm}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Ci\^{e}ncias M\'{e}dicas}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+\DeclareOption{dgeo}{%
+  \def\ua@textA{}%
+  \def\ua@textB{Departamento de Geoci\^{e}ncias}%
+  \def\ua@textC{}%
+  \def\ua@textD{}%
+}
+
+%
+% Process options
+%
+\ExecuteOptions{engineering} % default!
+\ExecuteOptions{dem}         % default!
+\ExecuteOptions{newLogo}     % default!
+\ProcessOptions
+
+%
+% Used to place a tri-colored colored bar in the title page. The \BAR macro must be
+% placed inside the first argument of the \HEADER macro.
+%
+\def\BAR{\smash{\rlap{\textcolor[rgb]{\ua@redT,\ua@greenT,\ua@blueT}{\vrule width 133mm height 12.000mm depth -10.666mm}}}%  top bar
+         \smash{\rlap{\textcolor[rgb]{\ua@redM,\ua@greenM,\ua@blueM}{\vrule width 133mm height 10.667mm depth  -9.333mm}}}%  middle bar
+         \smash{\rlap{\textcolor[rgb]{\ua@redB,\ua@greenB,\ua@blueB}{\vrule width 133mm height  9.334mm depth  -8.000mm}}}}% bottom bar
+
+
+\def\BARIN{\smash{\rlap{\textcolor[rgb]{1.0,1.0,1.0}{\vrule width 133mm height 12.000mm depth -10.666mm}}}%  top bar
+           \smash{\rlap{\textcolor[rgb]{1.0,1.0,1.0}{\vrule width 133mm height 10.667mm depth  -9.333mm}}}%  middle bar
+           \smash{\rlap{\textcolor[rgb]{1.0,1.0,1.0}{\vrule width 133mm height  9.334mm depth  -8.000mm}}}}% bottom bar
+%
+% Used to include a figure in the title page. The \FIG macro must be placed
+% inside the first argument of the \HEADER macro. The text of the macro is
+% typeset in the space reversed for a figure, citation, or whatever, and must
+% have an height plus depth that does not exceed 60mm
+%
+\long\def\FIG#1{\smash{\rlap{\setbox0=\hbox{#1}\dimen0=137mm%
+  \advance\dimen0 by\ht0\lower\dimen0\box0}}}
+
+
+%
+% fixed font sizes
+%
+\def\ua@font@size#1{\ifcase#1
+      % Juri position \small - 0
+    \fontsize{8}{10.667}\selectfont % baselineskip at 4/3 pt size
+  \or % Normal text \normalsize - 1
+    \fontsize{10}{13.3}\selectfont
+  \or % Section names \large - 2
+    \fontsize{11}{14.667}\selectfont
+  \or % Thesis title \Large - 3
+    \fontsize{14}{18.667}\selectfont
+  \or % Documento provisorio \LARGE - 4
+    \fontsize{24}{32}\selectfont
+  \fi}
+
+%
+% Used to put the University logo on the top of a page. Should be the first
+% macro inside a \TitlePage environment. Its first argument can be a \BAR
+% macro call and/or a \FIG macro call; anything else that does not change the
+% horizontal and vertical positions can also be used. Its second argument is
+% the year of the thesis.
+%
+\def\ua@above#1#2{\rlap{\smash{\raise 10pt\hbox{\ua@font@size1\textsf{#1}}}}\hbox{\ua@font@size1\textsf{#2}}}
+\def\ua@below#1#2{\rlap{\smash{\lower 10pt\hbox{\ua@font@size1\textsf{#2}}}}\hbox{\ua@font@size1\textsf{#1}}}
+%
+\long\def\HEADER#1#2{\vspace*{5mm}\noindent\ua@font@size1\rlap{\parbox{\textwidth}{%
+    \ifua@coverdepname@
+    \ua@font@size1\hspace*{77mm}#1\textsf{\vspace*{0.7mm}\textbf{Universidade de Aveiro}}\space\space
+        \vskip -0.3pt
+        \nointerlineskip\moveright 75.2mm\nointerlineskip
+        \ua@font@size1\hspace*{77mm}\rlap{\ua@font@size1\textsf{\textbf{\strut #2}}}%
+        \par
+        \vspace*{6mm}
+        \ua@font@size1\hspace*{77mm}\rlap{\ua@font@size1\textsf{\textbf{Universit� de Bretagne Sud}}}
+      }}\par
+    \ua@font@size1\vspace*{-18.15mm}\noindent\hspace*{64mm}\includegraphics[height=11.569mm]{cover-ua/ua-logo.pdf}%
+    \par
+    \ua@font@size1\vspace*{2.7mm}\noindent\hspace*{48.708mm}\includegraphics[height=13.924mm]{cover-ua/ubs-logo.pdf}%
+    %
+    \ifua@final@\else
+      \smash{\rlap{\kern 2mm\lower 150mm\hbox{\Huge\textsf{\textbf{DOCUMENTO}}}}}%
+      \smash{\rlap{\kern 4mm\lower 162mm\hbox{\Huge\textsf{\textbf{PROVIS\'ORIO}}}}}%
+    \fi
+  \par\vspace*{40mm}}
+
+\long\def\INNERHEADER#1#2{\vspace*{5mm}\noindent\ua@font@size1\rlap{\parbox{\textwidth}{%
+    \ifua@coverdepname@
+    \ua@font@size1\hspace*{77mm}#1\textsf{\vspace*{0.7mm}\textbf{Universidade de Aveiro}}\space\space
+        \vskip -0.3pt
+        \nointerlineskip\moveright 75.2mm\nointerlineskip
+        \ua@font@size1\hspace*{77mm}\rlap{\ua@font@size1\textsf{\textbf{\strut #2}}}%
+        \par
+        \vspace*{6mm}
+        \ua@font@size1\hspace*{77mm}\rlap{\ua@font@size1\textsf{\textbf{Universit� de Bretagne Sud}}}
+      }}\par
+    \ua@font@size1\vspace*{-18.15mm}\noindent\hspace*{64mm}\includegraphics[height=11.569mm]{cover-ua/ua-logo.pdf}%
+    \par
+    \ua@font@size1\vspace*{2.7mm}\noindent\hspace*{48.708mm}\includegraphics[height=13.924mm]{cover-ua/ubs-logo.pdf}%
+  \par\vspace*{40mm}}
+
+%
+% Used to put the thesis title in the page. Must be placed immediately after
+% the \HEADER macro. The first argument is the author's name and the second
+% argument is the thesis title.
+%
+\long\def\TITLE#1#2{\noindent\hspace*{15mm}\parbox[t]{52mm}{\raggedright
+  \ua@font@size3\textsf{\textbf{#1}}}\hspace*{10mm}\parbox[t]{120mm}{\raggedright
+  \ua@font@size3\textsf{\textbf{#2}}}\vspace*{2mm}\par}
+
+%
+% Used to put text in the page. The first argument is the left hand side
+% text (may be empty) and the second argument is the right hand side text.
+% Use either one \TEXT macro call per paragraph or put all paragraphs in
+% one \TEXT macro call.
+%
+\long\def\TEXT#1#2{\noindent\hspace*{15mm}\parbox[t]{52mm}{\raggedright\sloppy
+  \textsf{#1}}\hspace*{10mm}\parbox[t]{120mm}{\textsf{#2}}\par\medskip}
+
+
+% Used to put a new section in the page. Similar to TEXT but with different
+% font sizes and with bold characters.
+\long\def\SECTION#1#2{\TEXT{\ua@font@size1\textbf{#1}}{\ua@font@size1#2}}
+
+% Used to display the list of members of the Juri
+\long\def\JURI#1#2#3{\TEXT{#1}{\textsf{#2}\newline\ua@font@size0{#3}}\par\medskip\vspace*{20pt}}
+
+%Used to display a text acknowledging the grant
+\long\def\SPONSOR#1#2#3{\TEXT{#1}{\begin{minipage}[t]{57mm}\ua@font@size1\textsf{#2}\end{minipage}\hspace*{6mm}\begin{minipage}[t]{57mm}\ua@font@size1\textsf{#3}\end{minipage}}}
+
+%
+% The environment used to build a special page.
+%
+\def\TitlePage{\newpage\begingroup
+  \setcounter{ctitle}{0}
+  \hoffset=-1in%
+  \voffset=-1in%
+  \oddsidemargin=0mm%
+  \evensidemargin=0mm%
+  \topmargin=0mm%
+  \headheight=0mm%
+  \headsep=0mm%
+  \textwidth=210mm%
+  %\textheight=297mm%
+  \paperwidth=210mm%
+  \paperheight=297mm%
+  \footskip=0mm%
+  \maxdepth=0mm%
+  \hsize=210mm%
+  \vsize=297mm%
+  \titlepage}
+\def\EndTitlePage{\endtitlepage\endgroup\newpage}
+
+%
+% Used to place a 3mm grid in the page (useful for positioning things). This
+% macro works correctly when the PostScript file is generated by dvips. Perfect
+% for ghostscript (gv), but very bad when printed. For debugging purposes
+%
+\iftrue\def\GRID{\special{"gsave initmatrix 72 25.4 div dup scale
+  0 setlinewidth 0.8 setgray newpath
+  0 3 210 { 0 moveto 0 297 rlineto } for
+  0 3 297 { 0 exch moveto 210 0 rlineto } for stroke
+  1 0 0 setrgbcolor newpath
+  15 0 moveto 15 297 lineto 77 0 moveto 77 297 lineto
+  0 293 moveto 210 293 lineto 0 289 moveto 210 289 lineto
+  0 239 moveto 210 239 lineto
+  0 148 moveto 210 148 lineto 0 88 moveto 210 88 lineto
+  77 88 moveto 77 148 lineto 137 88 moveto 137 148 lineto stroke
+  grestore}}
+\fi
+
+% to always indent the first paragraph
+\let\@afterindentfalse=\@afterindenttrue\@afterindenttrue
+
+
+%
+% mark (or not) all horizontal overfull boxes
+%
+\ifua@final@
+  \setlength\overfullrule{0mm}
+\else
+  \setlength\overfullrule{5mm}
+\fi
+
+
+%
+% Add all chapters without numbers (\chapter*) to the table of contents. As a
+% consequence, the bibliography, table of contents, list of figures and list
+% of tables appear in the table of contents
+%
+% good for the report and book classes
+%
+\def\@makeschapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \Huge \bfseries  #1\par\nobreak
+    \vskip 40\p@
+    % new stuff
+    \refstepcounter{section}% to make the hyperref package do the right thing!!!
+    \addcontentsline{toc}{chapter}{#1}%
+    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+    % end of new stuff
+  }}
+
+%Dynamic handling of Jury members
+\newcounter{cjuri}
+\newcommand{\JURICATEGORY}{%
+    \ifnum\value{cjuri} = 0%
+     presidente%~/~president
+     \else
+         \ifnum\value{cjuri} =1%
+         vogais%~/~examiners committee
+         \fi
+     \fi
+     \addtocounter{cjuri}{1}
+}
+
+%Dynamic handling of Titles
+\newcounter{ctitle}
+\newcommand{\DISPLAYAUTHOR}{%
+    \ifnum\value{ctitle} = 0%
+     {\ciAuthor}
+     \fi
+     \addtocounter{ctitle}{1}
+}
+
+%Redefine \do command
+\renewcommand*{\do}[1]{
+   ##1
+}
+
+%
+% Creates entire cover
+%
+\newcommand{\MakeCover}{%
+%
+% Cover page (use only one of the first two \TitlePage)
+%
+% First alternative, with a figure
+  \TitlePage
+     \HEADER{\BAR} % the \FIG{} is optional
+           {\ciThesisYear}
+   \dolistloop{\ciTitle}
+
+  \EndTitlePage
+  \titlepage\ \endtitlepage % empty page
+
+%
+% Second alternative, with a citation
+%
+\ifdefined \ciQuoteText
+  \TitlePage
+    \HEADER{\BAR\FIG{
+           \begin{minipage}{100mm} % no more than 120mm
+            ``\textit{\ciQuoteText}''
+             \begin{flushright}
+	  	  	     --- \ciQuoteAuthor
+             \end{flushright}
+          \end{minipage}
+          }}
+           {\ciThesisYear}
+   \dolistloop{\ciTitle}
+
+  \EndTitlePage
+  \titlepage\ \endtitlepage % empty page
+\fi
+
+%
+% FIRST THESIS PAGE
+%
+\setcounter{page}{2}
+\newcommand{\yourSecondSupervisor}{}
+\ifdefined \ciSecondSupervisorName
+  \def\yourSecondSupervisor{, e da {\ciSecondSupervisorName}, {\ciSecondSupervisorTitle} {\ciSecondSupervisorDepart}}
+\fi
+
+\TitlePage
+  \INNERHEADER{\BARIN}{\ciThesisYear}
+   \dolistloop{\ciTitle}
+
+  \vspace*{10mm}
+  \TEXT{}{%
+\noindent%
+ \ifdefined \ciDocumentTypeThesis%
+Tese%
+ \else \ifdefined \ciDocumentTypeDissertation%
+Disserta\c c\~ao%
+    \fi %
+  \fi% 
+~em cotutela apresentada \`a Universidade de Aveiro para cumprimento dos requisitos necess\'arios \`a obten\c c\~ao do grau de {\ciDegreeTitle} em {\ciDegreeName}, realizada sob a orienta\c c\~ao cient\'ifica do {\ciSupervisorName}, {\ciSupervisorTitle} do{\ua@textA} {\ua@textB} da Universidade de Aveiro{\yourSecondSupervisor}.}
+    \vspace{62mm}
+    \hspace*{10mm}\includegraphics[height=15mm]{cover-ua/funding}
+% \ifdefined \ciGrantFirst
+%     \SPONSOR{}{\ifdefined\ciGrantFirst%
+%               \ciGrantFirst
+
+%            \fi}
+%              {\ifdefined \ciGrantSecond%
+%               \ciGrantSecond
+%            \fi
+%            }
+\fi
+   \EndTitlePage
+\titlepage\ \endtitlepage % empty page
+
+%
+% DEDICATORY
+%
+\ifdefined \ciDedicatory
+\TitlePage
+  \vspace*{55mm}
+  \TEXT{}
+       {\ciDedicatory}
+\EndTitlePage
+\titlepage\ \endtitlepage % empty page
+\fi
+
+%
+% JURY
+%
+\TitlePage
+  \vspace*{55mm}
+%   \SECTION{o j\'uri~/~the jury}
+  \SECTION{o j\'uri}
+       {}
+    \dolistloop{\ciJuriMember}
+   \EndTitlePage
+\titlepage\ \endtitlepage % empty page
+
+%
+% ACKNOWLEDGMENTS
+%
+\ifdefined \ciAcknowledgements
+\TitlePage
+  \vspace*{55mm}
+%   \SECTION{\textbf{agradecimentos~/\newline acknowledgements}}
+  \SECTION{\textbf{agradecimentos}}
+       {\ciAcknowledgements}
+
+\EndTitlePage
+\titlepage\ \endtitlepage % empty page
+\fi
+
+%
+% ABSTRACTS
+%
+\dolistloop{\ciAbstract}
+
+}
+
+\endinput

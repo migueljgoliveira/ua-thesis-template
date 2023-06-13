@@ -1,0 +1,361 @@
+\listfiles
+
+%% to compile cover
+\makeatletter
+\newcommand{\makecoverfile}[0]{
+  \immediate\write18{latexmk -pdf cover-ua.tex}
+}
+\makeatother
+
+%% to select input encoding
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% to use internationalization and localization languages
+\usepackage[portuguese,french,english]{babel}
+
+%% to add and customise hyperlinks
+\usepackage[hidelinks,breaklinks=true,colorlinks=true]{hyperref}
+\hypersetup{urlcolor=black}
+\ifthenelse{\boolean{draft}}{
+        \hypersetup{linkcolor=blue,citecolor=blue}%
+    }{
+        \hypersetup{linkcolor=black,citecolor=black}%
+    }
+
+%% to put draft watermark
+\ifthenelse{\boolean{draft}}{\usepackage{draftwatermark}}{}
+
+%% to merge pdfs
+\usepackage{pdfpages}
+
+%% to set page margins
+\usepackage[left=3cm,right=2.5cm,bottom=3cm,top=3cm]{geometry}
+\ifthenelse{\boolean{margins}}{\geometry{showframe}}{}
+
+%% to add frame aroung images
+\usepackage[export]{adjustbox}
+\ifthenelse{\boolean{frames}}{
+    \let\includegraphicsold\includegraphics%
+    \renewcommand{\includegraphics}[2][]{\adjustbox{frame}{\includegraphicsold[#1]{#2}}}
+    }{}
+
+%% to refine text
+\usepackage{microtype}
+
+%% to typeset quantities in consistent way
+\usepackage{siunitx}
+\sisetup{detect-all,
+         list-final-separator={, and },
+         list-units=single,  % repeat or single
+         detect-weight=true,
+         detect-inline-weight=math,
+         table-text-alignment = right,
+         table-number-alignment = right,
+         product-units = power,
+         }
+\DeclareSIUnit\pixel{px}
+\DeclareSIUnit\greylevel{gl}
+
+%% to use bold math symbols
+\usepackage{bm}
+
+%% to add dummy text
+\usepackage{lipsum}
+
+%% to add appendices
+\usepackage{appendix}
+
+%% to use international system units
+\usepackage{siunitx}
+
+%% to add inline TT text (e.g. code snippets)
+\usepackage{verbatim}
+
+%% to add frames around figures and allow force placement
+\usepackage{float}
+
+%% to enable floats on facing pages
+\usepackage{dpfloat}
+
+%% to add pdf comments
+\usepackage{comment}
+\usepackage{pdfcomment}
+
+%% to control hyphenation 
+% \hyphenpenalty=100
+\doublehyphendemerits=1000000
+
+%% to customise bookmarks
+\usepackage[open,openlevel=0,numbered]{bookmark}
+
+%% to enhance the quality of tables
+\usepackage{booktabs}
+
+%% to create table layouts
+\usepackage{makecell}
+
+%% to customise tables row spacing
+\renewcommand{\arraystretch}{1.25} % default : 1.0
+
+%% to use tables with footnotes
+\usepackage[normal]{threeparttable}
+
+%% to add colors to tables
+\usepackage{colortbl}
+
+%% to use text in multiple columns
+\usepackage{multicol}
+
+%% to use math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%% to extend amsmath package
+\usepackage{mathtools}
+
+%% to use an alternative interface to graphics
+\usepackage{graphicx}
+\ExecuteOptions{draft}
+%
+% to set the main path of figures
+\graphicspath{{figures/}}
+
+%% to use advanced colors
+\usepackage{xcolor}
+%
+% to set the color of dem
+\ifthenelse{\boolean{lesscolor}}{
+        \definecolor{dem}{cmyk}{0,0,0,1}               % if lesscolor option active turn black
+    }{
+        \definecolor{dem}{cmyk}{0.26,0.90,0.94,0.24}
+    }
+
+\newcommand{\colordem}[1]{\textcolor{dem}{#1}}
+\newcommand{\colorlink}[1]{\textcolor{dem}{#1}}
+%
+% to set gray highlight color 
+\definecolor{highlight}{cmyk}{0.0,0.0,0.0,0.3}
+
+%% to use colors in tables
+\usepackage{colortbl}
+
+%% to use advanced quotes
+\usepackage{csquotes}
+
+%% to customise lists
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=0pt,partopsep=0pt}
+
+%% to capitalize first word of text
+\usepackage{mfirstuc}
+
+%% to use extended array–and tabular–environments
+\usepackage{array}
+
+%% to add lof and lot to toc
+\usepackage[nottoc,notbib,notlof,notlot]{tocbibind}
+
+%% to use independent subfiles
+\usepackage{subfiles}
+\newboolean{InSubfile}
+\setboolean{InSubfile}{true}
+
+%% to linebreak url at appropriate character 
+\usepackage{url}
+\urlstyle{rm}
+
+%% to cite labels from another subfile
+\usepackage{xr}
+\usepackage{zref}
+
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+    \externaldocument{#1}%
+    \addFileDependency{#1.tex}%
+    \addFileDependency{#1.aux}%
+}
+
+%% to select fonts with lualatex
+\usepackage{fontspec}
+%
+% to set main font
+\setmainfont{STIX Two Text}[
+    Extension = {.otf},
+    UprightFont = {*-Regular},
+    BoldFont = {*-Bold},
+    ItalicFont = {*-Italic},
+    BoldItalicFont = {*-BoldItalic},
+    FontFace = {sb}{\shapedefault}{*-SemiBold},
+    FontFace = {mb}{\shapedefault}{*-Medium},
+]
+%
+% to set sans serif font
+\setsansfont{Helvetica Neue}[
+    Extension = {.otf},
+    UprightFont = {*-Roman},
+    BoldFont = {*-Bold},
+    ItalicFont = {*-Italic},
+    BoldItalicFont = {*-BoldItalic},
+    FontFace = {ul}{\shapedefault}{*-UltraLight},
+    FontFace = {el}{\shapedefault}{*-Thin},
+    FontFace = {l}{\shapedefault}{*-Light},
+    FontFace = {sb}{\shapedefault}{*-Medium},
+    FontFace = {eb}{\shapedefault}{*-Heavy},
+    FontFace = {ub}{\shapedefault}{*-Black},
+]
+%
+% to declare font series
+\DeclareRobustCommand{\ulseries}{\fontseries{ul}\selectfont}
+\DeclareRobustCommand{\elseries}{\fontseries{el}\selectfont}
+\DeclareRobustCommand{\lseries}{\fontseries{l}\selectfont}
+\DeclareRobustCommand{\mbseries}{\fontseries{mb}\selectfont}
+\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
+\DeclareRobustCommand{\ebseries}{\fontseries{eb}\selectfont}
+\DeclareRobustCommand{\ubseries}{\fontseries{ub}\selectfont}
+%
+% to select math font with lualatex
+\usepackage[math-style=TeX,bold-style=TeX]{unicode-math}
+%
+% to set main math font
+\setmathfont[version=default]{STIX Two Math}
+%
+% to define a secondary sans serif math font
+\setmathfont[version=sansmath]{Helvetica Neue}
+%
+% to select current math font
+\mathversion{default}
+
+%% to customise toc, lof, and lot
+\usepackage[titles]{tocloft}
+%
+% to remove page style from toc, lof, lot first pages
+\tocloftpagestyle{plain}
+%
+% to add up to subsections in toc
+\setcounter{tocdepth}{2}
+%
+% to customise font style of toc, lof, and lot
+\newcommand{\cftfontsize}{\normalsize}
+\renewcommand{\cftchapfont}{\sffamily\bfseries\cftfontsize}
+\renewcommand{\cftsecfont}{\sffamily\cftfontsize}
+\renewcommand{\cftsubsecfont}{\sffamily\cftfontsize}
+\renewcommand{\cftfigfont}{\sffamily\cftfontsize}
+\renewcommand{\cfttabfont}{\sffamily\cftfontsize}
+%
+% to put page number after section, subsection, figure, and table
+\renewcommand{\cftdot}{}
+\renewcommand{\cftchapleader}{\hfill}
+\renewcommand{\cftsecleader}{\hspace{1em}}
+\renewcommand{\cftsecafterpnum}{\cftparfillskip}
+\renewcommand{\cftsubsecleader}{\hspace{1em}}
+\renewcommand{\cftsubsecafterpnum}{\cftparfillskip}
+\renewcommand{\cftfigleader}{\hspace{1em}}
+\renewcommand{\cftfigafterpnum}{\cftparfillskip}
+\renewcommand{\cfttableader}{\hspace{1em}}
+\renewcommand{\cfttabafterpnum}{\cftparfillskip}
+\renewcommand{\cftpnumalign}{l}
+%
+% to put chapter page numbers aligned right
+\makeatletter
+\if@cfthaschapter
+  \renewcommand{\cftchapfillnum}[1]{%
+    {\cftchapleader}\nobreak%
+    \makebox[\@pnumwidth][r]{\cftchappagefont #1}\cftchapafterpnum\par%
+  }
+\makeatother
+%
+% to set indents from left margin of figure, table, chapter, section and subsection entries
+\cftsetindents{figure}{3ex}{5ex}
+\cftsetindents{table}{3ex}{5ex}
+\cftsetindents{chapter}{0pt}{3ex}
+\cftsetindents{section}{3ex}{5ex}
+\cftsetindents{subsection}{8ex}{7ex}
+%
+% to increase vspace between sections and subsections
+\setlength\cftbeforechapskip{2.5ex}
+\setlength\cftbeforesecskip{0.5ex}
+\setlength\cftbeforesubsecskip{0.5ex}
+\setlength\cftbeforefigskip{0.5ex}
+\setlength\cftbeforetabskip{0.5ex}
+\setlength\cftbeforetoctitleskip{0pt}
+\setlength\cftbeforeloftitleskip{0pt}
+\setlength\cftbeforelottitleskip{0pt}
+\setlength\cftaftertoctitleskip{0pt}
+\setlength\cftafterloftitleskip{0pt}
+\setlength\cftafterlottitleskip{0pt}
+%
+\newcommand{\nonumchaptoc}[1]{\hspace{3ex}#1}
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
+
+%% to use advanced programming tools
+\usepackage{etoolbox}
+
+%% to use and customise acronyms
+\usepackage[nonumberlist,acronym,nomain,nopostdot]{glossaries}
+\include{acronyms}
+\glsdisablehyper
+\makeglossaries
+
+%% to customise floats caption
+\usepackage{subcaption}
+\usepackage[font={sf,small},labelfont=bf]{caption}
+%
+% to define caption options
+\captionsetup[table]{labelsep=quad,labelfont=bf}
+\captionsetup[figure]{labelsep=quad}
+
+%% to use biblatex to manage bibliography
+\usepackage[style=authoryear,citestyle=authoryear]{biblatex}
+\input{bib/biblatex}
+
+%% to format sections, subsections, subsubsections titles
+\usepackage[explicit,compact,aftersep,clearempty]{titlesec}
+%
+\newcommand{\chapterstyle}{\filleft\sffamily\Huge\bfseries}
+%
+\titleformat{\section}{\sffamily\large\bfseries}{\colordem{\thesection}}{1em}{#1}
+\titleformat{\subsection}{\sffamily\normalsize\bfseries}{\colordem{\thesubsection}}{1em}{#1}
+\titleformat{\subsubsection}{\rmfamily\normalsize\bfseries}{}{}{#1}
+\titleformat{\paragraph}[runin]{\rmfamily\normalsize\bfseries}{}{}{#1}
+%
+\titlespacing*{\chapter}      {0pt}{80pt}{100pt}
+\titlespacing*{\section}      {0pt}{2.50ex plus .2ex minus .2ex}{1.6ex}
+\titlespacing*{\subsection}   {0pt}{2.25ex plus .2ex minus .2ex}{1.1ex}
+\titlespacing*{\subsubsection}{0pt}{2.25ex plus .2ex minus .2ex}{1.1ex}
+\titlespacing*{\paragraph}    {0pt}{2.25ex plus .2ex minus .2ex}{1em}
+
+% \titlespacing*{\chapter}      {0pt}{80pt}{100pt}
+
+%% to customise headers and footers
+\usepackage{fancyhdr}
+%
+% to create page style
+\renewcommand{\chaptermark}[1]{\markboth{\itshape#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\itshape\thesection~ ~#1}}
+\fancypagestyle{mypagestyle}{%
+    \fancyhf{}%
+    \fancyhead[LE]{\thepage\hspace{20pt}\nouppercase{\itshape\leftmark}}%
+    \fancyhead[RO]{\nouppercase{\itshape\rightmark}\hspace{20pt}\thepage}%
+    \fancyfoot[CE,CO]{}%
+    \fancyfoot[LE,RO]{}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \setlength{\headheight}{13.59999pt}
+}
+%
+% to remove page number from chapter pages
+\fancypagestyle{plain}{
+    \renewcommand{\headrulewidth}{0pt}%
+    \fancyhf{}%
+}
+%
+% to set page style
+\pagestyle{mypagestyle}

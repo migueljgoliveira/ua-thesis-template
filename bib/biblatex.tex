@@ -1,0 +1,234 @@
+% Citation Commands
+% \cite - Goossens et al. 1994
+% \parencite - (Goossens et al. 1994)
+% \textcite - Goossens et al. (1994)
+
+% to load bib files
+% \bibliography{../bib/phd-thesis.bib}
+\addbibresource{../bib/chapter-1.bib}
+% \addbibresource{../bib/chapter-X.bib}
+
+% set package options
+\ExecuteBibliographyOptions{sortcites=false}
+\ExecuteBibliographyOptions{doi=false,isbn=false,url=false}
+\ExecuteBibliographyOptions{giveninits=true,terseinits=true}
+\ExecuteBibliographyOptions{minnames=1,maxbibnames=12,maxcitenames=2}
+\ExecuteBibliographyOptions{uniquelist=false,uniquename=false}
+
+% set bib month entries
+\DefineBibliographyStrings{english}{january=January,february=February,march=March,april=April,may=May,june=June,july=July,august=August,september=September,november=November,december=December}
+
+% to use last name, first name
+\DeclareNameAlias{author}{family-given}
+
+% to customise citations appearance
+\renewcommand*{\citesetup}{\scshape\biburlsetup\frenchspacing}
+
+% to customise item separation lenght
+\setlength\bibitemsep{3.0pt plus 2.0pt minus 1.0pt}
+
+% to remove period between authors initials
+\renewcommand*{\revsdnamepunct}{}
+\renewcommand*{\newblockpunct}{\addcomma\space}
+
+% to add hyperef to doi
+\newbibmacro{hyperdoi}[1]{\iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+\newbibmacro{hyperurl}[1]{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}
+\newbibmacro{hyperlink}[1]{\iffieldundef{doi}{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+
+\DefineBibliographyStrings{english}{editor = {(Ed.)}, editors = {(Eds.)}}
+
+% to define bib entries and undefined mandatory bib fields
+\newcommand{\bibmiss}[2]{#2{\color{red}#1}}
+% draft document (comment lines below for final document)
+% \newcommand{\bibbook}{\iffieldundef{title}{\bibmiss{Book}{. }{.}}{\printfield{title}}}
+% \newcommand{\bibpaper}{\iffieldundef{title}{\bibmiss{Paper}{. }}{\printfield{title}}}
+% \newcommand{\bibarticle}{\iffieldundef{title}{\bibmiss{Article}{. }}{\printfield{title}}}
+% \newcommand{\bibchapter}{\iffieldundef{title}{\bibmiss{Chapter}{. }}{\printfield{title}}}
+% \newcommand{\bibwebpage}{\iffieldundef{title}{\bibmiss{Webpage}{. }}{\printfield{title}}}
+% \newcommand{\bibsoftware}{\iffieldundef{title}{\bibmiss{Software}{. }}{\printfield{title}}}
+% %
+% \newcommand{\bibauthor}{\ifnameundef{author}{\bibmiss{Author}{}}{\printnames{author}}}
+% \newcommand{\bibeditor}{\ifnameundef{editor}{\bibmiss{Editor}{}}{\printnames{editor}}}
+% \newcommand{\bibpublisher}{\iflistundef{publisher}{\bibmiss{Publisher}{. }}{\printlist{publisher}}}
+% \newcommand{\bibinstitution}{\iflistundef{institution}{\bibmiss{Institution}{, }}{\printlist{institution}}}
+% \newcommand{\bibjournal}{\iffieldundef{journaltitle}{\bibmiss{Journal}{. }}{\printfield{journaltitle}}}
+% \newcommand{\bibproc}{\iffieldundef{booktitle}{\bibmiss{Proceedings}{. }}{\printfield{booktitle}}}
+% \newcommand{\bibcollection}{\iffieldundef{booktitle}{\bibmiss{Book}{. }}{\printfield{booktitle}}}
+% \newcommand{\bibseries}{\iffieldundef{series}{\bibmiss{Series}{}}{\printfield{series}}}
+% %
+% \newcommand{\bibpages}{\iffieldundef{pages}{\bibmiss{Pages}{:}}{\printfield{pages}}}
+% \newcommand{\biblocation}{\iflistundef{location}{\bibmiss{Location}{, }}{\printlist{location}}}
+% \newcommand{\bibyear}{\iffieldundef{year}{\bibmiss{Year}{, }}{\printfield{year}}}
+% \newcommand{\bibtype}{\iffieldundef{type}{\bibmiss{Type}{, }}{\printfield{type}}}
+% \newcommand{\biburl}{\iffieldundef{url}{\bibmiss{URL}{. }}{\printfield{url}}}
+% \newcommand{\bibversion}{\iffieldundef{version}{\bibmiss{Version}{. }}{\printfield{version}}}
+% \newcommand{\bibvolume}{\iffieldundef{volume}{\bibmiss{Volume}{, }}{\printfield{volume}}}
+% \newcommand{\bibdays}{\iffieldundef{volume}{\bibmiss{Days}{, }}{\printfield{volume}}}
+% \newcommand{\bibmonth}{\iffieldundef{month}{}{\printfield{month}}}
+% \newcommand{\bibwebsite}{\iffieldundef{titleaddon}{\bibmiss{website}{ }}{\printfield{titleaddon}}}
+% \newcommand{\bibbookpages}{\iffieldundef{pages}{\bibmiss{Pages}{}}{\printfield{pages}}}
+% %
+% final document (comment lines below for draft document)
+\newcommand{\bibbook}{\printfield{title}}
+\newcommand{\bibpaper}{\printfield{title}}
+\newcommand{\bibarticle}{\printfield{title}}
+\newcommand{\bibchapter}{\printfield{title}}
+\newcommand{\bibwebpage}{\printfield{title}}
+\newcommand{\bibsoftware}{\printfield{title}}
+%
+\newcommand{\bibauthor}{\printnames{author}}
+\newcommand{\bibeditor}{\printnames{editor}}
+\newcommand{\bibpublisher}{\printlist{publisher}}
+\newcommand{\bibinstitution}{\printlist{institution}}
+\newcommand{\bibjournal}{\printfield{journaltitle}}
+\newcommand{\bibproc}{\printfield{booktitle}}
+\newcommand{\bibcollection}{\printfield{booktitle}}
+\newcommand{\bibseries}{\printfield{series}}
+%
+\newcommand{\bibpages}{\printfield{pages}}
+\newcommand{\biblocation}{\printlist{location}}
+\newcommand{\bibyear}{\printfield{year}}
+\newcommand{\bibtype}{\printfield{type}}
+\newcommand{\biburl}{\printfield{url}}
+\newcommand{\bibversion}{\printfield{version}}
+\newcommand{\bibvolume}{\printfield{volume}}
+\newcommand{\bibdays}{\printfield{volume}}
+\newcommand{\bibmonth}{\printfield{month}}
+\newcommand{\bibwebsite}{\printfield{titleaddon}}
+\newcommand{\bibbookpages}{\printfield{pages}}
+
+\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
+\renewcommand{\mkbibnamegiven}[1]{\textsc{#1}}
+
+% to customise article entry
+\DeclareFieldFormat[article]{title}{\makefirstuc{#1}}
+% \DeclareFieldFormat[article]{author}{\textsc{#1}}
+\DeclareFieldFormat[article]{number}{(#1)}
+\DeclareFieldFormat[article]{pages}{#1}
+\DeclareBibliographyDriver{article}{%
+    \usebibmacro{hyperlink}{%
+        \bibauthor\newunit%
+        \bibarticle\newunit%
+        \bibjournal\newblock%
+        \bibvolume%
+        \iffieldundef{number}{}{\printfield{number}}\printunit{\addcolon}%
+        \bibpages\newblock%
+        \bibyear%
+        \finentry%
+    }
+}
+
+% to customise inproceedings entry
+\DeclareFieldFormat[inproceedings]{title}{\makefirstuc{#1}}
+\DeclareFieldFormat[inproceedings]{volume}{#1} % alias for conference days
+\DeclareBibliographyDriver{inproceedings}{%
+    \usebibmacro{hyperlink}{%
+        \bibauthor\newunit%
+        \bibpaper\newunit%
+        \bibproc\newblock%
+        \biblocation\newblock%
+        \bibdays\printunit{\space}%
+        \bibmonth\newblock%
+        \bibyear%
+        \finentry%
+    }
+}
+
+% to customise book entry
+\DeclareBibliographyDriver{book}{%
+    \usebibmacro{hyperlink}{%
+        \bibauthor\newunit%
+        \bibbook\newunit%
+        \bibpublisher\newblock%
+        \biblocation\newblock%
+        \bibyear%
+        \finentry%
+    }
+}
+
+% to customise software entry
+\DeclareFieldFormat[software]{version}{v#1}
+\DeclareBibliographyDriver{software}{%
+    \usebibmacro{hyperlink}{%
+        \bibauthor\newunit%
+        \bibsoftware\newunit%
+        \bibversion\newblock%
+        \bibyear%
+        \finentry%
+    }
+}
+
+% to customise thesis entry
+\DeclareFieldFormat[thesis]{title}{\textit{#1}}
+\newcommand{\bibthesis}{\iffieldundef{title}{\bibmiss{Thesis}{. }}{\printfield{title}}}
+\DeclareBibliographyDriver{thesis}{%
+    \usebibmacro{hyperlink}{%
+        \bibauthor\newunit%
+        \bibthesis\newunit%
+        \bibtype\newblock%
+        \bibinstitution\newblock%
+        \bibyear%
+        \finentry%
+    }
+}
+
+% to customise thesis entry
+\DeclareFieldFormat[online]{title}{\textit{#1}}
+\DeclareFieldFormat[online]{url}{\url{#1}}
+\DeclareFieldFormat[online]{titleaddon}{#1}
+\DeclareBibliographyDriver{online}{%
+    \usebibmacro{hyperlink}{%
+        \bibauthor\newunit%
+        \bibwebpage\newunit%
+        \bibwebsite\newblock%
+        \biburl\newblock%
+        \bibyear%
+        \finentry%
+    }
+}
+
+% to customise incollection entry
+\DeclareFieldFormat[incollection]{title}{#1}
+\DeclareFieldFormat[incollection]{booktitle}{\textit{#1}}
+\DeclareFieldFormat[incollection]{volume}{Volume #1}
+\DeclareNameAlias{editor}{family-given}
+\DeclareBibliographyDriver{incollection}{%
+    \usebibmacro{hyperlink}{%
+        \bibauthor\newunit%
+        \bibchapter\newunit%
+        \usebibmacro{in:}
+        \printnames{editor}
+        \ifthenelse{\value{editor}>1}{\bibstring{editors}.}{\bibstring{editor}.}
+        \bibcollection\newblock%
+        \bibvolume\newunit%
+        \bibseries\newblock%
+        \bibpublisher\newblock%
+        \biblocation\newblock%
+        \bibyear%
+        \finentry%
+    }
+}
+
+% to customise collection entry
+\DeclareBibliographyDriver{collection}{%
+    \usebibmacro{hyperlink}{%
+        \printnames{editor}
+        \ifthenelse{\value{editor}>1}{\bibstring{editors}.}{\bibstring{editor}.}
+        \bibbook\newunit%
+        \bibpublisher\newblock%
+        \biblocation\newblock%
+        \bibyear%
+        \finentry%
+    }
+}
+
+% to remove "and" from last author in bib mode and add "and" in citation mode
+\DeclareDelimFormat[bib]{finalnamedelim}{\addcomma\space}
+\DeclareDelimFormat[cite]{finalnamedelim}{\space and \space}
+
+% to sort bib entries of same first author by year
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{\step[fieldsource=author, match=\regexp{(.*?)\s+and\s+}]
+         \step[fieldset=sortname, fieldvalue={$1}]}}}
